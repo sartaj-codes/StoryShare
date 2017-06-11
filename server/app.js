@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //static files folder
-app.set(express.static(path.join(__dirname+'/client')) );
+app.use(express.static(path.join(__dirname,'/../client')) );
 
 //DATABASE connectivity
 mongoose.connect('mongodb://localhost/StoryShare');
@@ -30,8 +30,8 @@ var db = mongoose.connection;
 var routes = require('./routes/index');
 //var feeds  = require('./routes/storyfeed');
 
-app.get('/', function(req, res){
-   res.sendFile(path.join(__dirname+'/../client/index.html'));
+app.get('/main', function(req, res){
+   res.sendFile(path.join(__dirname,'/../client' ,'index.html'));
 });
 
 
