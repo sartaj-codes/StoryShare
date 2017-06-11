@@ -12,12 +12,28 @@ var mongo            = require('mongodb');
 var mongoose         = require('mongoose');
 var app              = express();
 var router           = express.Router();
+var morgan           = require('morgan');
 
 
+app.use(morgan('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(flash());
+// secret-session storage
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+})); 
+
+
+
+// Passport init
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //static files folder
 app.use(express.static(path.join(__dirname,'/../client')) );
@@ -40,17 +56,21 @@ app.use('/user',routes);
 //app.use('/feeds', feeds);
 
 
-// secret-session storage
-app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: true
-})); 
 
 
-// Passport init
-app.use(passport.initialize());
-app.use(passport.session());
+// Global Vars
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
+});
+
+
+
+
+
 
 
 /* Server runing on port */
