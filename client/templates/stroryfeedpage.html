@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+    <title>ShareStory | User</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link type="text/css" href="../css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <link type="text/css"  href="../css/navbar-fixed-top.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../css/feedsytle.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+  <script src="../js/jquery/ie-emulation-modes-warning.js"></script>
+  <script src="../js/controllers/feedPage_controller.js"></script>
+ </head>
+
+  <body ng-app="feed_app" ng-controller="feeds_Page">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top user_header_cus" >
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" style = "font-size: xx-large;"">StoryShare</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../navbar/" style="font-size: 25px">Points</a></li>
+            <li><a href="../navbar-static-top/" style="font-size: 25px">Rank</a></li>
+            
+
+            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="../img/s_icon.jpg" style="max-width: 35px; margin-top: -4px; border-radius: 50%"> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li class="dropdown-header">Hey {{username}} !!</li>
+                <li><a href="#" onclick="document.getElementById('id01').style.display='block'" >Add Story</a></li>
+                <li><a href="#">Earnings</a>
+                <li role="separator" class="divider"></li>
+                <li><a href="/user/logout">Logout</a></li>
+              </ul></li>  
+           </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron" style="margin-top: 18px;" ng-repeat = "story in stories">
+        <div>
+         <div class="col-md-10">
+           <h2>{{story.title}}</h2>
+          </div>
+         <div class="col-md-2">
+           <h3 style="padding: 22px;">{{story.username}}</h3>
+         </div>
+         </div>
+             <p> {{story.story}}</p> 
+             <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">vote</a>
+        </p>
+      </div>
+
+
+
+ <div id="id01" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4" style="width: 55%; margin-top: 4%;">
+       <header class="w3-container  user_modal_cus"> 
+         <span onclick="document.getElementById('id01').style.display='none'" 
+         class="w3-button w3-large w3-display-topright">&times;</span>
+        <h2>Write a Story</h2>
+       </header>
+      <div class="w3-container user_modal_bcus">
+        <form class="form-horizontal">
+          <div class="form-group">
+          <input type="text" class="form-control" ng-model="title" placeholder="Write a title of your story .. " >
+          <textarea style="margin-top: 14px" class="form-control" ng-model="story" rows="6" id="comment" placeholder="Type your story here!! All the best"></textarea>
+          <button class="btn btn-default pull-right user_modal_bcus_btn"  onclick="document.getElementById('id01').style.display='none'" ng-click="addStory()">Post</button>
+       </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+ </div>
+</div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../js/jquery/jquery.min.js"><\/script>')</script>
+    <script src="../js/jquery/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/jquery/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

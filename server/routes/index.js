@@ -1,26 +1,34 @@
-var express = require('express');
-var router  = express.Router();
-var path    = require('path');
-var Users   = require('../models/user.js')
-var passport = require('passport');
+var express       = require('express');
+var router        = express.Router();
+var path          = require('path');
+var Users         = require('../models/user.js')
+var passport      = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var flash            = require('connect-flash');
+var flash         = require('connect-flash');
 
 
+function ensureAuth(req, res, next){
+  if(req.isAuthenticated())
+    return next();
+  else
+    res.redirect('/');
+
+ }
+
+ router.get('/getuser', ensureAuth, function(req, res){
+      var user  = req.user;
+      res.json(user);
+ });
 
 router.get('/', ensureAuth, function(req, res, done){
-  res.sendFile(path.join(__dirname + '/../../client/stroryfeedpage.html'));
+  res.sendFile(path.join(__dirname + '/../../client/templates/stroryfeedpage.html'));
   console.log("FeedPage");
+  var user  = req.user;
+  console.log(user);
   req.flash('success_msg', 'frfgffdfdfdfsdfsd');
 });
  
- function ensureAuth(req, res, next){
- 	if(req.isAuthenticated())
- 		return next();
- 	else
- 		res.redirect('/');
-
- }
+ 
 
 
 router.post('/register', function(req, res, next){
@@ -48,6 +56,7 @@ passport.use(new LocalStrategy(
    	}
 
    	Users.comparePassword(password, user.password, function(err, isMatch){
+   		
    		if(err) throw err;
    		if(isMatch)
    			return done(null, user);
@@ -65,6 +74,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   Users.getUserById(id, function(err, user) {
+
     done(err, user);
   });
 });

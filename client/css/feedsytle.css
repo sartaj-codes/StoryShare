@@ -1,0 +1,29 @@
+.user_header_cus{
+	padding: 12px;
+	background-color: white;
+}
+body{
+	background-image: url("../img/bck_img1.jpg");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.user_modal_cus{
+	background-color: black;
+    color: white;
+
+}
+.user_modal_bcus{
+	width: 83%;
+    margin-left: 7%;
+    margin-top: 3%;
+
+}
+
+.user_modal_bcus_btn{
+	margin-top: 6px;
+    width: 97px;
+    color: white;
+    padding: 0;
+    background-color: black;
+    font-size: 21px;
+}

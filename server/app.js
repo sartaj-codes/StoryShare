@@ -44,19 +44,25 @@ var db = mongoose.connection;
 
 //different routes 
 var routes = require('./routes/index');
-//var feeds  = require('./routes/storyfeed');
+var feeds  = require('./routes/storyfeed');
 
-app.get('/main', function(req, res){
-   res.sendFile(path.join(__dirname,'/../client' ,'index.html'));
+
+//Root page access
+app.get('/', ensureAuth, function(req, res){
+	res.sendFile(path.join(__dirname,'/../client' ,'user_main.html'));
 });
+
+function ensureAuth(req, res, next){
+ 	if(req.isAuthenticated())
+ 		res.redirect('/user/');
+ 	else
+ 		next();
+}
 
 
 //Routes
 app.use('/user',routes);
-//app.use('/feeds', feeds);
-
-
-
+app.use('/feeds', feeds);
 
 // Global Vars
 app.use(function (req, res, next) {
@@ -66,12 +72,6 @@ app.use(function (req, res, next) {
   res.locals.user = req.user || null;
   next();
 });
-
-
-
-
-
-
 
 /* Server runing on port */
 app.set('port', process.env.PORT || 3000);
