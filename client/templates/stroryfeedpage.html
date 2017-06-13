@@ -18,10 +18,11 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
   <script src="../js/jquery/ie-emulation-modes-warning.js"></script>
   <script src="../js/controllers/feedPage_controller.js"></script>
+  
  </head>
 
   <body ng-app="feed_app" ng-controller="feeds_Page">
-
+   
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top user_header_cus" >
       <div class="container">
@@ -38,15 +39,15 @@
           <ul class="nav navbar-nav">
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/" style="font-size: 25px">Points</a></li>
-            <li><a href="../navbar-static-top/" style="font-size: 25px">Rank</a></li>
+            <li><a href="#" onclick="document.getElementById('id02').style.display='block'" style="font-size: 25px">Points</a></li>
+            <li><a href="#" onclick="document.getElementById('id03').style.display='block'"  ng-click =" getRank()" style="font-size: 25px">Rank</a></li>
             
 
             <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="../img/s_icon.jpg" style="max-width: 35px; margin-top: -4px; border-radius: 50%"> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li class="dropdown-header">Hey {{username}} !!</li>
+                <li class="dropdown-header">Hey!!! {{username}} </li>
                 <li><a href="#" onclick="document.getElementById('id01').style.display='block'" >Add Story</a></li>
-                <li><a href="#">Earnings</a>
+                <li><a href="#" onclick="document.getElementById('id04').style.display='block'" ng-click =" getRank()">Earnings</a>
                 <li role="separator" class="divider"></li>
                 <li><a href="/user/logout">Logout</a></li>
               </ul></li>  
@@ -54,26 +55,23 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
-    <div class="container">
-
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron" style="margin-top: 18px;" ng-repeat = "story in stories">
+<!-- ***************************************** Container Start ********************************-->
+    <div class="container" >
+      <div  style="margin-top: 13px; border:1px solid rgba(128, 128, 128, 0.21); background-color: rgb(241, 241, 241); font-size: x-large;" ng-repeat = "story in stories">
         <div>
          <div class="col-md-10">
-           <h2>{{story.title}}</h2>
+           <h2 style="font-size: 47px; font-family: fantasy;">{{story.title | uppercase }}</h2>
           </div>
          <div class="col-md-2">
-           <h3 style="padding: 22px;">{{story.username}}</h3>
+           <h3 style="padding: 22px; font-family: -webkit-body;">{{story.username}}</h3>
          </div>
          </div>
-             <p> {{story.story}}</p> 
-             <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">vote</a>
-        </p>
+           <p style="margin-left: 44px; margin-right: 13px; font-family: cursive;"> {{story.story}} 
+             <button class="btn btn-lg btn-primary pull-right" href="../../components/#navbar" role="button" ng-click="voteUser(story._id, story.id, story.username)" ng-disabled=!(story.story_flag.flag)>{{story.story_flag.text}} </button>
+          </p>
       </div>
 
-
-
+<!-- ************************************* Write A story ********************************-->
  <div id="id01" class="w3-modal w3-animate-opacity">
   <div class="w3-modal-content w3-card-4" style="width: 55%; margin-top: 4%;">
        <header class="w3-container  user_modal_cus"> 
@@ -84,9 +82,10 @@
       <div class="w3-container user_modal_bcus">
         <form class="form-horizontal">
           <div class="form-group">
+          <input type="hidden" ng-model= "uid" >
           <input type="text" class="form-control" ng-model="title" placeholder="Write a title of your story .. " >
           <textarea style="margin-top: 14px" class="form-control" ng-model="story" rows="6" id="comment" placeholder="Type your story here!! All the best"></textarea>
-          <button class="btn btn-default pull-right user_modal_bcus_btn"  onclick="document.getElementById('id01').style.display='none'" ng-click="addStory()">Post</button>
+          <button class="btn btn-default pull-right user_modal_bcus_btn"  onclick="document.getElementById('id01').style.display='none'"  ng-click="addStory()">Post</button>
        </div>
         </form>
       </div>
@@ -95,18 +94,65 @@
 
 
 
+<!-- *************************************** Points Earned model ********************************-->
+  <div id="id02" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4" style="width: 34%; margin-top: 4%;">
+       <header class="w3-container  user_modal_cus"> 
+         <span onclick="document.getElementById('id02').style.display='none'" 
+         class="w3-button w3-large w3-display-topright">&times;</span>
+        <h2>Points Earned</h2>
+       </header>
+      <div class="w3-container user_modal_bcus">
+        <h3 style="font-family: inherit;">Total Number of Points Earned : {{points}}</h3>
+        <h5 style="font-family: cursive;">since {{points}} votes has been given to your stories</h5>
+       <br><br>
+      </div>
+       
+      </div>
+    </div>
+  
 
- </div>
+<!-- ***************************************** Rank Modal ********************************-->
+    <div id="id03" class="w3-modal w3-animate-opacity">
+     <div class="w3-modal-content w3-card-4" style="width: 34%; margin-top: 4%;">
+       <header class="w3-container  user_modal_cus"> 
+         <span onclick="document.getElementById('id03').style.display='none'" 
+         class="w3-button w3-large w3-display-topright">&times;</span>
+        <h2>Rank</h2>
+       </header>
+      <div class="w3-container user_modal_bcus">
+        <h3 style="font-family: inherit;">Your Rank is : {{Rank}}</h3>
+        <h5 style="font-family: cursive;">If two users have same number of points then there rank will be same.</h5>
+       <br><br>
+      </div>
+       
+      </div>
+    </div>
+  
+  <!-- ***************************************** Total Earnings ********************************-->
+  <div id="id04" class="w3-modal w3-animate-opacity">
+     <div class="w3-modal-content w3-card-4" style="width: 34%; margin-top: 4%;">
+       <header class="w3-container  user_modal_cus"> 
+         <span onclick="document.getElementById('id04').style.display='none'" 
+         class="w3-button w3-large w3-display-topright">&times;</span>
+        <h2>Total Earnings</h2>
+       </header>
+      <div class="w3-container user_modal_bcus">
+        <h3 style="font-family: inherit;">Earned Gift Coupons  : {{earnings}}</h3>
+        <h5 style="font-family: cursive;">100 points  = 1 Gift Coupon</h5>
+       <br><br>
+      </div>
+      </div>
+    </div>
+
+</div>
 </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../js/jquery/jquery.min.js"><\/script>')</script>
     <script src="../js/jquery/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/jquery/ie10-viewport-bug-workaround.js"></script>
   </body>
+
 </html>
+
+

@@ -3,9 +3,22 @@ var app = angular.module("app", [] );
 app.controller('main_page', function($scope, $http){
  $scope.error_flag   = true;
  $scope.success_flag = true;
-  $scope.createUser = function(){
+  var request = true;
+  
+  
+  $http({
+      url    : '/user/getuser',
+      method : 'GET',
+  }).then(function(response)
+  {
+     $scope.uid      = response.data._id;
+     $scope.username = response.data.username;  
+     $scope.points   = response.data.points; 
+  });
+ 
+
+$scope.createUser = function(){
     
-    var request = true;
     $scope.data = {
           username : $scope.user_n,
           password : $scope.pass,
@@ -48,44 +61,39 @@ app.controller('main_page', function($scope, $http){
   		request = false;
     }
 
-if(request)
-  {
-    $scope.error_message = "You are Registered successfully !!";
-    $scope.success_flag  = false;
-    
-    $http({
-		url : '/user/register',
-		method :'POST',
-		data : $scope.data
-	}).then(function(response){
-		console.log("User Registered !!");
-	});
-
-  }	
-	
-}
-
-
-/*$scope.loginUser = function(){
-	$scope.data = {
-		username : $scope.luser_n,
-		password : $scope.lpass,
-	}
-    
-    $http({
-		url : '/user/login',
-		method :'POST',
-		data : $scope.data
-	}).then(function(response){
-		console.log("User Registered !!");
-	});
-
-
-};
-*/
-
-
-
-
+ if(request)  
+ {  
+   /*-------------------------------------------------------------------------*/
+   $http({
+      url : '/user/getUsername/' + $scope.user_n,
+      method : 'GET',
+   }).then(function(response){
+     var val = response.data;
+    if(val != "null"   )
+    {
+         $scope.error_message = "Username is already used !!";
+         $scope.success_flag  = true;
+         $scope.error_flag    = false; 
+    }
+  
+     else
+     {
+    /*--------------------------------------------------------------------*/
+       $scope.error_message = "You are Registered successfully !!";
+       $scope.success_flag  = false;
+       $scope.error_flag    = true;
+       $http({
+		     url : '/user/register',
+		     method :'POST',
+		     data : $scope.data
+	     }).then(function(response){
+		    console.log("User Registered !!");
+	     });
+ /*-------------------------------------------------------------------------*/
+     }
+   });
+  }
+ }
 
 });
+

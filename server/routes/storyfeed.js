@@ -14,22 +14,36 @@ function ensureAuth(req, res, next){
 
  }
 
-router.post('/addStory', ensureAuth, function(req, res){
-  Stories.addStory(req.body.id, req.body.usern, req.body.title, req.body.story, function(err, doc){
+router.post('/addStory/:id', ensureAuth, function(req, res){
+  console.log(req.params.id);
+  Stories.addStory(req.params.id, req.body.usern, req.body.title, req.body.story, function(err, doc){
      if(err)
      	res.json(err);
      else
-     	res.json(doc);
+     	res.redirect('/user/');
   });
 });
 
-router.get('/getStories', function(req, res){
-     Stories.getall(function(err, doc){
-     	if(err)
-     		res.json(err);
-     	else
-     		res.json(doc);
-     });
+
+router.get('/getStories/:id', ensureAuth,  function(req, res){
+      Stories.getAll(req.params.id, function(err, doc){
+        if(err)
+          res.json(err);
+        else
+          res.json(doc);
+      });
+ });
+
+router.post('/voteUser', ensureAuth, function(req, res){
+	Stories.voteUser(req.body.storyId, req.body.userId, function(err, doc){
+     if(err)
+       res.json(err);
+     else
+      res.redirect(req.get('/'));
+  });
 });
+
+
+
 
 module.exports = router;

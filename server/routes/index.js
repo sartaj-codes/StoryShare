@@ -20,6 +20,27 @@ function ensureAuth(req, res, next){
       res.json(user);
  });
 
+ router.get('/getAll/:id', ensureAuth, function(req, res){
+      Users.getAll(req.params.id, function(err, doc){
+        if(err)
+          res.json(err);
+        else
+          res.json(doc);
+      });
+ });
+
+
+
+router.post('/createVotes/:_id', ensureAuth, function(req, res){
+      Users.addvoteUser(req.params._id, function(err, doc){
+        if(err)
+          res.json(err);
+        else
+          res.json(doc);
+      });
+});
+
+
 router.get('/', ensureAuth, function(req, res, done){
   res.sendFile(path.join(__dirname + '/../../client/templates/stroryfeedpage.html'));
   console.log("FeedPage");
@@ -29,8 +50,42 @@ router.get('/', ensureAuth, function(req, res, done){
 });
  
  
+router.post('/addpoints/:id', ensureAuth, function(req, res){
+       Users.addpoints(req.params.id, function(err, doc){
+          if(err)
+            res.json(err);
+          else
+            res.json(doc);
+       });
+});
 
 
+router.get('/getalluser',ensureAuth, function(req,res){
+     Users.getalluser(function(err, doc){
+      if(err)
+        res.json(err);
+      else
+        {
+           if(doc === null)
+               res.json(0);
+            else
+              res.json(doc);
+           }
+     });
+   
+});
+
+router.get('/getUsername/:name', ensureAuth, function(req,res){
+     Users.getUserByUsername(req.params.name, function(err, doc){
+      if(err)
+        res.json(err);
+      else
+        res.json(doc);
+     });
+   
+});
+
+/******************************** Registering new user ***************************************/
 router.post('/register', function(req, res, next){
   var _username = req.body.username;
   var _password  = req.body.password;
@@ -38,6 +93,7 @@ router.post('/register', function(req, res, next){
   var newuser = new Users({
        username : _username,
        password : _password,
+       points   : 0,
   });
   
 Users.registerUser(newuser, function(err, doc){
@@ -47,10 +103,11 @@ Users.registerUser(newuser, function(err, doc){
   });
  });
 
+
 passport.use(new LocalStrategy(
   function(username, password, done) {
    Users.getUserByUsername(username, function(err, user){
-   	//if(err) throw err;
+  
    	if(!user){
    		return done(null, false);
    	}
@@ -90,5 +147,5 @@ router.get('/logout', function(req, res){
     res.redirect('/');
 });
 
-
+/*************************************************************************************************/
 module.exports = router;
