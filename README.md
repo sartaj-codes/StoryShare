@@ -1,6 +1,6 @@
 # StoryShare 
 ### Introduction 
-Its a is social networking sites. Share your story be famous and get rewards . 
+Its kind of social networking site. Share your story be famous and get rewards . 
 
 ### Working
 By choosing an unique username. create an account. <br>
