@@ -2,7 +2,7 @@
 ### Introduction 
 Its a is social networking sites. Share your story be famous and get rewards . 
 
-### working
+### Working
 By choosing an unique username. create an account. <br>
 Here you can see real life stories shared by others. <br>
 You can give vote to their stories.<br>
