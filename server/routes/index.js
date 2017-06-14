@@ -44,9 +44,6 @@ router.post('/createVotes/:_id', ensureAuth, function(req, res){
 router.get('/', ensureAuth, function(req, res, done){
   res.sendFile(path.join(__dirname + '/../../client/templates/stroryfeedpage.html'));
   console.log("FeedPage");
-  var user  = req.user;
-  console.log(user);
-  req.flash('success_msg', 'frfgffdfdfdfsdfsd');
 });
  
  
@@ -75,7 +72,7 @@ router.get('/getalluser',ensureAuth, function(req,res){
    
 });
 
-router.get('/getUsername/:name', ensureAuth, function(req,res){
+router.get('/getUsername/:name',  function(req,res){
      Users.getUserByUsername(req.params.name, function(err, doc){
       if(err)
         res.json(err);
@@ -99,7 +96,8 @@ router.post('/register', function(req, res, next){
 Users.registerUser(newuser, function(err, doc){
   	  if(err)
   	  	throw err;
-  	  console.log(doc);
+  	  else
+        res.json(doc);
   });
  });
 

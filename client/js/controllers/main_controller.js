@@ -3,7 +3,7 @@ var app = angular.module("app", [] );
 app.controller('main_page', function($scope, $http){
  $scope.error_flag   = true;
  $scope.success_flag = true;
-  var request = true;
+ 
   
   
   $http({
@@ -18,12 +18,12 @@ app.controller('main_page', function($scope, $http){
  
 
 $scope.createUser = function(){
-    
+    console.log("Creating");
     $scope.data = {
           username : $scope.user_n,
           password : $scope.pass,
 	};
-  
+   var request = true;
   	if($scope.user_n == null)
   	{
   		$scope.error_message = "Fill all credentials !!"
@@ -68,6 +68,8 @@ $scope.createUser = function(){
       url : '/user/getUsername/' + $scope.user_n,
       method : 'GET',
    }).then(function(response){
+      console.log(response.data);
+
      var val = response.data;
     if(val != "null"   )
     {

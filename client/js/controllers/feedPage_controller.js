@@ -39,7 +39,16 @@ app1.controller('feeds_Page', function($scope, $http){
        	  data   : $scope.data
        }).then(function(response){
 
-       });
+
+         $http({
+          url   : '/feeds/getStories/'+$scope.uid,
+          method: 'GET',
+         }).then(function(response){
+            $scope.stories = response.data.reverse();  
+           
+      });
+             
+});
      /*---------------------------------------------------------*/
 
 
