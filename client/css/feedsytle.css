@@ -1,11 +1,12 @@
 .user_header_cus{
 	padding: 12px;
-	background-color: white;
+	background-color: black;
 }
 body{
 	
 	background-repeat: no-repeat;
     background-attachment: fixed;
+    background-image: url('../img/bck_img.png');
 }
 .user_modal_cus{
 	background-color: black;

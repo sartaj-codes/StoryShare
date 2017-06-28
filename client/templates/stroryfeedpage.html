@@ -33,14 +33,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" style = "font-size: xx-large;"">StoryShare</a>
+          <a class="navbar-brand" href="#" style = "font-size: xx-large; color:azure;">StoryShare</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" onclick="document.getElementById('id02').style.display='block'" style="font-size: 25px">Points</a></li>
-            <li><a href="#" onclick="document.getElementById('id03').style.display='block'"  ng-click =" getRank()" style="font-size: 25px">Rank</a></li>
+            <li><a href="#" onclick="document.getElementById('id02').style.display='block'" style="font-size: 25px; color: azure;">Points</a></li>
+            <li><a href="#" onclick="document.getElementById('id03').style.display='block'"  ng-click =" getRank()" style="font-size: 25px; color: azure;">Rank</a></li>
             
 
             <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="../img/s_icon.jpg" style="max-width: 35px; margin-top: -4px; border-radius: 50%"> <span class="caret"></span></a>
@@ -57,7 +57,7 @@
     </nav>
 <!-- ***************************************** Container Start ********************************-->
     <div class="container" >
-      <div  style="margin-top: 13px; border:1px solid rgba(128, 128, 128, 0.21); background-color: rgb(241, 241, 241); font-size: x-large;" ng-repeat = "story in stories">
+      <div  style="margin-top: 13px; border:2px solid grey; background-color: rgba(0, 0, 0, 0.3); font-size: x-large; color: white; width: 114%; margin-left: -76px" ng-repeat = "story in stories">
         <div>
          <div class="col-md-10">
            <h2 style="font-size: 47px; font-family: fantasy;">{{story.title | uppercase }}</h2>
@@ -67,7 +67,8 @@
          </div>
          </div>
            <p style="margin-left: 44px; margin-right: 13px; font-family: cursive;"> {{story.story}} 
-             <button class="btn btn-lg btn-primary pull-right" href="../../components/#navbar" role="button" ng-click="voteUser(story._id, story.id, story.username)" ng-disabled=!(story.story_flag.flag)>{{story.story_flag.text}} </button>
+             <button class="btn btn-lg btn-primary pull-right" style="background: white; color: black; 
+             border-radius: 30px; " href="../../components/#navbar" role="button" ng-click="voteUser(story._id, story.id, story.username)" ng-disabled=!(story.story_flag.flag)>{{story.story_flag.text}} </button>
           </p>
       </div>
 
