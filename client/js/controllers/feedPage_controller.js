@@ -120,7 +120,7 @@ app1.controller('feeds_Page', function($scope, $http){
          var getR = 0;
          for(var i = 0; response.data != null , i < response.data.length; i++)
          { 
-         	if( $scope.points > response.data[i].points)
+         	if( $scope.points <= response.data[i].points)
                getR++;
          }
          $scope.Rank = response.data.length - getR;
